@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "src/scoreboard.src.html"
+        ],
+        "createdAt": "2026-11-05T04:37:39.437Z",
+        "reason": "Claude triage: only one-sided borders are the brass card hooks (border with bottom:none draws the hook) and the 2px dashed team-row divider documented in DESIGN.md; neither is a card accent tab"
+      }
+    ]
+  }
+}

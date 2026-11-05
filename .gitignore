@@ -1,0 +1,6 @@
+# Slideshow PDF (too large, kept local only)
+*.pdf
+
+# Venmo QR images (kept local only)
+assets/venmo.png
+**/venmo-qr.png

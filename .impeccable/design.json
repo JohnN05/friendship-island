@@ -1,0 +1,822 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-04T06:30:51+00:00",
+  "title": "Design System: Friendship Island Scoreboard",
+  "extensions": {
+    "colorMeta": {
+      "lifeguard-red": {
+        "role": "primary",
+        "displayName": "Lifeguard Red",
+        "canonical": "#d42a2a",
+        "tonalRamp": [
+          "#210000",
+          "#4b0003",
+          "#7a090e",
+          "#ad191c",
+          "#d73e39",
+          "#ef7469",
+          "#ffaba1",
+          "#ffe9e6"
+        ]
+      },
+      "lifeguard-red-deep": {
+        "role": "primary",
+        "displayName": "Deep Lifeguard Red",
+        "canonical": "#9e1c1f",
+        "tonalRamp": [
+          "#1d0102",
+          "#450d0c",
+          "#701f1d",
+          "#a0322f",
+          "#c8514a",
+          "#e17e75",
+          "#faaea6",
+          "#fee9e6"
+        ]
+      },
+      "flag-yellow": {
+        "role": "secondary",
+        "displayName": "Flag Yellow",
+        "canonical": "#f6c324",
+        "tonalRamp": [
+          "#120900",
+          "#2f2200",
+          "#503d01",
+          "#745a02",
+          "#9a780c",
+          "#be9a35",
+          "#dcc17f",
+          "#feedc5"
+        ]
+      },
+      "flag-yellow-deep": {
+        "role": "secondary",
+        "displayName": "Deep Flag Yellow",
+        "canonical": "#c9971a",
+        "tonalRamp": [
+          "#140800",
+          "#312100",
+          "#533b00",
+          "#785800",
+          "#9f7500",
+          "#bd994d",
+          "#dcc08b",
+          "#feedcc"
+        ]
+      },
+      "card-cream": {
+        "role": "neutral",
+        "displayName": "Card Cream",
+        "canonical": "#fbf3df",
+        "tonalRamp": [
+          "#0d0b07",
+          "#27241c",
+          "#443f34",
+          "#635d4e",
+          "#837d6c",
+          "#a49e90",
+          "#c8c4b9",
+          "#f1eee8"
+        ]
+      },
+      "weathered-plank": {
+        "role": "neutral",
+        "displayName": "Weathered Plank",
+        "canonical": "#f4ead2",
+        "tonalRamp": [
+          "#0d0b06",
+          "#27241a",
+          "#453f32",
+          "#655d4b",
+          "#857d68",
+          "#a59e8d",
+          "#c9c4b7",
+          "#f1eee6"
+        ]
+      },
+      "bare-wood": {
+        "role": "neutral",
+        "displayName": "Bare Wood",
+        "canonical": "#d6bd8f",
+        "tonalRamp": [
+          "#100a02",
+          "#2c220f",
+          "#4c3d22",
+          "#6e5b35",
+          "#907a51",
+          "#ae9c7b",
+          "#d0c2aa",
+          "#f6edde"
+        ]
+      },
+      "tar-ink": {
+        "role": "neutral",
+        "displayName": "Tar Ink",
+        "canonical": "#2b1d14",
+        "tonalRamp": [
+          "#0e0a08",
+          "#2a221e",
+          "#483d36",
+          "#695a51",
+          "#8a7a6f",
+          "#a99b93",
+          "#ccc2bb",
+          "#f4ede9"
+        ]
+      },
+      "driftwood-ink": {
+        "role": "neutral",
+        "displayName": "Driftwood Ink",
+        "canonical": "#5a4434",
+        "tonalRamp": [
+          "#100a06",
+          "#2c221a",
+          "#4b3c31",
+          "#6d594a",
+          "#8f7868",
+          "#ad9a8d",
+          "#d0c1b7",
+          "#f6ece6"
+        ]
+      },
+      "ocean-teal": {
+        "role": "tertiary",
+        "displayName": "Ocean Teal",
+        "canonical": "#17a3b5",
+        "tonalRamp": [
+          "#000f12",
+          "#002a30",
+          "#004952",
+          "#086a76",
+          "#008d9e",
+          "#5badba",
+          "#96cfd9",
+          "#d3f6fc"
+        ]
+      },
+      "ocean-teal-deep": {
+        "role": "tertiary",
+        "displayName": "Deep Ocean Teal",
+        "canonical": "#0f7f95",
+        "tonalRamp": [
+          "#000e14",
+          "#002a33",
+          "#004856",
+          "#06697c",
+          "#308a9f",
+          "#68aabb",
+          "#9ecdda",
+          "#d8f4fc"
+        ]
+      },
+      "shallow-sky": {
+        "role": "tertiary",
+        "displayName": "Shallow Sky",
+        "canonical": "#a8e6ec",
+        "tonalRamp": [
+          "#020e0f",
+          "#0e292b",
+          "#20474a",
+          "#33676c",
+          "#51888d",
+          "#7ca7ac",
+          "#abcbce",
+          "#dff3f5"
+        ]
+      },
+      "sand": {
+        "role": "neutral",
+        "displayName": "Sand",
+        "canonical": "#ead09c",
+        "tonalRamp": [
+          "#100a02",
+          "#2d220d",
+          "#4c3d1e",
+          "#6f5b30",
+          "#907a4d",
+          "#af9c77",
+          "#d0c3a7",
+          "#f6eedc"
+        ]
+      },
+      "sand-deep": {
+        "role": "neutral",
+        "displayName": "Deep Sand",
+        "canonical": "#d8b77a",
+        "tonalRamp": [
+          "#110a00",
+          "#2f2207",
+          "#503c15",
+          "#735925",
+          "#957941",
+          "#b39b6f",
+          "#d4c2a1",
+          "#f8edd9"
+        ]
+      },
+      "chalkboard-slate": {
+        "role": "neutral",
+        "displayName": "Chalkboard Slate",
+        "canonical": "#26332d",
+        "tonalRamp": [
+          "#090c0a",
+          "#1f2623",
+          "#39423e",
+          "#55615b",
+          "#73817a",
+          "#96a29c",
+          "#bec6c2",
+          "#eaf0ed"
+        ]
+      },
+      "chalk-white": {
+        "role": "neutral",
+        "displayName": "Chalk White",
+        "canonical": "#f7f4ea",
+        "tonalRamp": [
+          "#0c0b09",
+          "#252420",
+          "#41403a",
+          "#605e56",
+          "#807d75",
+          "#a09e97",
+          "#c6c4bf",
+          "#efeeeb"
+        ]
+      },
+      "brass": {
+        "role": "neutral",
+        "displayName": "Brass",
+        "canonical": "#c79a3e",
+        "tonalRamp": [
+          "#130900",
+          "#312100",
+          "#533b00",
+          "#795701",
+          "#9e761b",
+          "#ba995a",
+          "#dac193",
+          "#fcedd1"
+        ]
+      },
+      "rope": {
+        "role": "neutral",
+        "displayName": "Rope",
+        "canonical": "#b88b52",
+        "tonalRamp": [
+          "#130900",
+          "#322006",
+          "#553914",
+          "#7a5524",
+          "#9d7440",
+          "#ba986f",
+          "#d9bfa1",
+          "#fcecd9"
+        ]
+      },
+      "desk-sand": {
+        "role": "neutral",
+        "displayName": "Desk Sand",
+        "canonical": "#efe1c0",
+        "tonalRamp": [
+          "#0e0b05",
+          "#292317",
+          "#473f2c",
+          "#675d43",
+          "#887c60",
+          "#a79e86",
+          "#cbc4b2",
+          "#f3eee3"
+        ]
+      },
+      "desk-stroke": {
+        "role": "neutral",
+        "displayName": "Desk Stroke",
+        "canonical": "#cdb88f",
+        "tonalRamp": [
+          "#0f0a03",
+          "#2b2312",
+          "#4a3e25",
+          "#6c5b3a",
+          "#8d7b57",
+          "#ac9d7f",
+          "#cec3ad",
+          "#f5eee0"
+        ]
+      },
+      "paper-white": {
+        "role": "neutral",
+        "displayName": "Paper White",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#242424",
+          "#404040",
+          "#5d5d5d",
+          "#7d7d7d",
+          "#9e9e9e",
+          "#c4c4c4",
+          "#eeeeee"
+        ]
+      },
+      "plum": {
+        "role": "tertiary",
+        "displayName": "Deck Plum",
+        "canonical": "#6d1f5c",
+        "tonalRamp": [
+          "#140510",
+          "#37172e",
+          "#5d2b50",
+          "#864174",
+          "#ab5f97",
+          "#c587b3",
+          "#e2b4d4",
+          "#ffe6f7"
+        ]
+      },
+      "flamingo-pink": {
+        "role": "team",
+        "displayName": "Flamingo Pink",
+        "canonical": "#c85a8a",
+        "tonalRamp": [
+          "#18040c",
+          "#3d1326",
+          "#662542",
+          "#933861",
+          "#ba5681",
+          "#d381a2",
+          "#edb0c7",
+          "#fee7ef"
+        ]
+      },
+      "flamingo-blush": {
+        "role": "team",
+        "displayName": "Flamingo Blush",
+        "canonical": "#f8bfd5",
+        "tonalRamp": [
+          "#12080c",
+          "#311d25",
+          "#543542",
+          "#794f60",
+          "#9d6d80",
+          "#b992a1",
+          "#d8bbc6",
+          "#fae9ef"
+        ]
+      },
+      "lobster-red": {
+        "role": "team",
+        "displayName": "Lobster Red",
+        "canonical": "#bc1c34",
+        "tonalRamp": [
+          "#1c0203",
+          "#460910",
+          "#751620",
+          "#a72332",
+          "#d2444e",
+          "#e87879",
+          "#fdaba9",
+          "#ffe9e8"
+        ]
+      },
+      "lobster-blush": {
+        "role": "team",
+        "displayName": "Lobster Blush",
+        "canonical": "#f6a9ab",
+        "tonalRamp": [
+          "#140707",
+          "#361b1c",
+          "#5c3234",
+          "#854a4d",
+          "#aa686b",
+          "#c48e8f",
+          "#e1b9b9",
+          "#ffe8e8"
+        ]
+      },
+      "dolphin-blue": {
+        "role": "team",
+        "displayName": "Dolphin Blue",
+        "canonical": "#1a8ae2",
+        "tonalRamp": [
+          "#000c1c",
+          "#022544",
+          "#054271",
+          "#0b60a1",
+          "#1e81d1",
+          "#60a4e4",
+          "#9bc9f8",
+          "#e3f0fe"
+        ]
+      },
+      "dolphin-sky": {
+        "role": "team",
+        "displayName": "Dolphin Sky",
+        "canonical": "#9fd5f7",
+        "tonalRamp": [
+          "#040c12",
+          "#122733",
+          "#244456",
+          "#38637d",
+          "#5484a1",
+          "#7fa4bc",
+          "#aec8da",
+          "#e3f1fa"
+        ]
+      },
+      "seal-slate": {
+        "role": "team",
+        "displayName": "Seal Slate",
+        "canonical": "#6a84aa",
+        "tonalRamp": [
+          "#070b13",
+          "#1b2433",
+          "#314057",
+          "#495f7e",
+          "#677fa2",
+          "#8ca0bc",
+          "#b7c5da",
+          "#e7effb"
+        ]
+      },
+      "seal-mist": {
+        "role": "team",
+        "displayName": "Seal Mist",
+        "canonical": "#bfd0ee",
+        "tonalRamp": [
+          "#080b11",
+          "#1e242f",
+          "#374050",
+          "#515e75",
+          "#707e97",
+          "#939fb4",
+          "#bcc5d4",
+          "#eaeff7"
+        ]
+      },
+      "badge-white": {
+        "role": "neutral",
+        "displayName": "Badge White",
+        "canonical": "#fffdf3",
+        "tonalRamp": [
+          "#0b0b09",
+          "#252421",
+          "#41403b",
+          "#5f5e56",
+          "#7f7d75",
+          "#a09e98",
+          "#c5c4bf",
+          "#efeeec"
+        ]
+      },
+      "name-cream": {
+        "role": "neutral",
+        "displayName": "Name Cream",
+        "canonical": "#fffdef",
+        "tonalRamp": [
+          "#0c0b09",
+          "#25241f",
+          "#414039",
+          "#5f5e54",
+          "#7f7e72",
+          "#a09f95",
+          "#c5c4bd",
+          "#efefeb"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "numeral": {
+        "displayName": "Numeral",
+        "purpose": "Every score and timer digit, Josefin Sans 700, on hanging cards (196px scores, 122px clock) and control readouts (72px, 44px input). Tabular."
+      },
+      "display": {
+        "displayName": "Display",
+        "purpose": "Show name on the red header sign, Josefin Sans 700 at 88px, two lines, second indented 58px; cream with a plum drop shade. Also \"Team Scores\" (74px) and TIME! (230px)."
+      },
+      "team-name": {
+        "displayName": "Team Name",
+        "purpose": "Team names only, in the team's own Candice subset ('Candice Flamingos', 'Candice Lobsters', 'Candice Dolphins', 'Candice Seals'); each subset holds only that name's glyphs. Cream fill, 0.17em team-color stroke under the fill, fitted 66px down to 30px."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Control-view headings in Josefin Sans 700 (20px box headings, 24px team names, 30px app title)."
+      },
+      "chalk": {
+        "displayName": "Chalk",
+        "purpose": "Transient notes in Josefin Sans 700: just-scored slate, lead tag, fullscreen hint, QR caption, control lead note."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Control-view buttons (650, 15px) and help copy (400, 14px/1.45)."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Inline field label before a control row, uppercase tracked."
+      }
+    },
+    "shadows": [
+      {
+        "name": "hung-plank",
+        "value": "0 18px 26px rgba(40,25,10,.38), inset 0 -8px 0 rgba(90,60,30,.12)",
+        "purpose": "Team planks hanging from the crossbeam."
+      },
+      {
+        "name": "badge",
+        "value": "inset 0 0 0 4px rgba(255,255,255,.55), inset 0 -6px 12px rgba(80,50,30,.12), 0 4px 8px rgba(60,40,10,.18)",
+        "purpose": "Team badge set into its plank."
+      },
+      {
+        "name": "name-lift",
+        "value": "text-shadow: 0 6px 10px rgba(40,20,10,.25)",
+        "purpose": "Stroked team names on their badge."
+      },
+      {
+        "name": "lead-tag",
+        "value": "0 4px 6px rgba(0,0,0,.25)",
+        "purpose": "Plum \"in the lead\" tag."
+      },
+      {
+        "name": "header-sign",
+        "value": "0 14px 24px rgba(60,20,10,.35), inset 0 -8px 0 rgba(0,0,0,.12), inset 0 6px 0 rgba(255,255,255,.12)",
+        "purpose": "Red header plank with top highlight and bottom thickness."
+      },
+      {
+        "name": "hanging-card",
+        "value": "0 12px 14px rgba(40,25,10,.35), inset 0 0 0 3px rgba(120,90,50,.18)",
+        "purpose": "Number cards."
+      },
+      {
+        "name": "score-panel",
+        "value": "inset 0 0 0 4px rgba(150,100,10,.25), 0 6px 10px rgba(60,40,10,.2)",
+        "purpose": "Yellow panel the number cards hang on."
+      },
+      {
+        "name": "placard",
+        "value": "0 30px 50px rgba(30,15,5,.5), inset 0 0 0 10px #d42a2a",
+        "purpose": "TIME! placard, highest object on the board."
+      },
+      {
+        "name": "bolt",
+        "value": "0 2px 3px rgba(0,0,0,.35)",
+        "purpose": "Brass bolts."
+      },
+      {
+        "name": "painted-drop-shade",
+        "value": "text-shadow: 4px 5px 0 #6d1f5c, 5px 8px 10px rgba(0,0,0,.25)",
+        "purpose": "Plum under the show name; deep red (#9e1c1f) under \"Team Scores\"; TIME! uses 6px 8px 0 deep red. Painted lettering only, never under boxes, cards or buttons."
+      },
+      {
+        "name": "desk-box",
+        "value": "0 1px 3px rgba(90,60,30,.18), 0 10px 22px rgba(90,60,30,.16)",
+        "purpose": "Control-view boxes."
+      },
+      {
+        "name": "button-lip",
+        "value": "inset 0 0 0 2px #cdb88f, inset 0 -3px 0 #e6d6b2, 0 2px 4px rgba(110,80,30,.22)",
+        "purpose": "Neutral control button rim and pressable lip."
+      }
+    ],
+    "motion": [
+      {
+        "name": "card-fall",
+        "value": "0.48s cubic-bezier(.55,0,.9,.4); translateY(150%) rotate(9deg), fade",
+        "purpose": "Old score card drops off its hooks."
+      },
+      {
+        "name": "card-land",
+        "value": "0.95s cubic-bezier(.2,.8,.25,1); from translateY(-150%) rotate(-5deg), overshoot 4%, swing 3.5/-2/0.8deg",
+        "purpose": "New score card drops on with weight and swings to rest."
+      },
+      {
+        "name": "chalk-afterglow",
+        "value": "1.6s ease-out, 0.4s delay; dashed 4px white outline fades in then out",
+        "purpose": "One-beat highlight after a score card lands."
+      },
+      {
+        "name": "clock-flick",
+        "value": "out 0.22s ease-in translateY(40%); in 0.28s cubic-bezier(.2,.8,.25,1) from translateY(-35%)",
+        "purpose": "Timer digits change without spectacle."
+      },
+      {
+        "name": "slate-swing",
+        "value": "1.4s ease-out; rotate 14/-8/4/-1.5/0deg",
+        "purpose": "Just-scored chalk slate swings in; fades after 6s."
+      },
+      {
+        "name": "flag-raise",
+        "value": "pole 0.6s cubic-bezier(.2,.9,.2,1); unfurl 0.35s after 0.45s; wave 2.6s ease-in-out infinite",
+        "purpose": "Leader flag; plum lead tag fades in 0.4s after 0.6s."
+      },
+      {
+        "name": "placard-drop",
+        "value": "1.3s cubic-bezier(.2,.8,.25,1); swing -4/3/-1.5/0deg",
+        "purpose": "TIME! placard drops in at zero."
+      },
+      {
+        "name": "board-shudder",
+        "value": "0.6s linear; translate up to 10px",
+        "purpose": "Whole stage shakes at time's up."
+      },
+      {
+        "name": "sign-flash",
+        "value": "0.5s steps(1) x6; paint yellow/red",
+        "purpose": "Header flashes at time's up."
+      },
+      {
+        "name": "press",
+        "value": "0.08s transform/box-shadow; 0.15s background",
+        "purpose": "Control button press and hover."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "@media (prefers-reduced-motion: reduce) { all animation and transition none }",
+        "purpose": "Everything static; cards swap instantly, placard simply present."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "stage",
+        "value": "1920x1080 fixed, overflow hidden, scaled by min(vw/1920, vh/1080)"
+      },
+      {
+        "name": "control-single-column",
+        "value": "1100px"
+      },
+      {
+        "name": "control-compact",
+        "value": "640px"
+      }
+    ],
+    "textures": [
+      {
+        "name": "grain",
+        "value": "feTurbulence fractalNoise baseFrequency 0.0035 0.16, 4 octaves, seed 7; 900x180 tile; brown alpha",
+        "purpose": "Wood grain over all painted wood and, at 0.35 multiply, over team badges."
+      },
+      {
+        "name": "chips",
+        "value": "feTurbulence fractalNoise 0.006 0.022, seed 11, discrete alpha; 640x320; masked to outer 13% horizontal / 20% vertical edges",
+        "purpose": "Bare wood showing through chipped paint at plank edges."
+      },
+      {
+        "name": "sandgrain",
+        "value": "feTurbulence fractalNoise 0.9, 2 octaves, seed 3; 300x300; multiply 0.55 on stage",
+        "purpose": "Sand texture on the beach and control ground."
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Button",
+      "kind": "button",
+      "refersTo": "button",
+      "description": "Neutral operator action: score nudges, Reset, Set, Undo.",
+      "html": "<button class=\"ds-btn\" type=\"button\">+1</button>",
+      "css": ":host{--red:#d42a2a;--red-deep:#9e1c1f;--yellow:#f6c324;--yellow-deep:#c9971a;--cream:#fbf3df;--plank:#f4ead2;--ink:#2b1d14;--ink-soft:#5a4434;--sea-deep:#0f7f95;--slate:#26332d;--chalk:#f7f4ea;--brass:#c79a3e;--rope:#b88b52;--focus:#0f7f95;--display:'Josefin Sans','Century Gothic',sans-serif;--chalkface:'Josefin Sans','Century Gothic',sans-serif;--plum:#6d1f5c;--ui:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',sans-serif}.ds-btn{cursor:pointer;border:0;border-radius:8px;padding:9px 14px;font:650 15px var(--ui);background:#fff;color:var(--ink);box-shadow:inset 0 0 0 2px #cdb88f,inset 0 -3px 0 #e6d6b2,0 2px 4px rgba(110,80,30,.22);transition:transform .08s,box-shadow .08s,background .15s}.ds-btn:hover{background:#fff8e6}.ds-btn:active{transform:translateY(2px);box-shadow:inset 0 0 0 2px #cdb88f}.ds-btn:focus-visible{outline:3px solid var(--focus);outline-offset:2px}"
+    },
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one or two decisive actions per view: Open projector window, Start/Pause.",
+      "html": "<button class=\"ds-btn ds-btn-primary\" type=\"button\">Start</button>",
+      "css": ":host{--red:#d42a2a;--red-deep:#9e1c1f;--yellow:#f6c324;--yellow-deep:#c9971a;--cream:#fbf3df;--plank:#f4ead2;--ink:#2b1d14;--ink-soft:#5a4434;--sea-deep:#0f7f95;--slate:#26332d;--chalk:#f7f4ea;--brass:#c79a3e;--rope:#b88b52;--focus:#0f7f95;--display:'Josefin Sans','Century Gothic',sans-serif;--chalkface:'Josefin Sans','Century Gothic',sans-serif;--plum:#6d1f5c;--ui:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',sans-serif}.ds-btn{cursor:pointer;border:0;border-radius:8px;padding:9px 14px;font:650 15px var(--ui);background:#fff;color:var(--ink);box-shadow:inset 0 0 0 2px #cdb88f,inset 0 -3px 0 #e6d6b2,0 2px 4px rgba(110,80,30,.22);transition:transform .08s,box-shadow .08s,background .15s}.ds-btn:hover{background:#fff8e6}.ds-btn:active{transform:translateY(2px);box-shadow:inset 0 0 0 2px #cdb88f}.ds-btn:focus-visible{outline:3px solid var(--focus);outline-offset:2px}.ds-btn-primary{background:var(--red);color:#fff;box-shadow:inset 0 -3px 0 var(--red-deep),0 2px 5px rgba(120,20,20,.3)}.ds-btn-primary:hover{background:#c22424}"
+    },
+    {
+      "name": "Gold Button",
+      "kind": "button",
+      "refersTo": "button-gold",
+      "description": "Preset values: timer lengths and placement bonuses.",
+      "html": "<button class=\"ds-btn ds-btn-gold\" type=\"button\"><b>1st</b> +10</button>",
+      "css": ":host{--red:#d42a2a;--red-deep:#9e1c1f;--yellow:#f6c324;--yellow-deep:#c9971a;--cream:#fbf3df;--plank:#f4ead2;--ink:#2b1d14;--ink-soft:#5a4434;--sea-deep:#0f7f95;--slate:#26332d;--chalk:#f7f4ea;--brass:#c79a3e;--rope:#b88b52;--focus:#0f7f95;--display:'Josefin Sans','Century Gothic',sans-serif;--chalkface:'Josefin Sans','Century Gothic',sans-serif;--plum:#6d1f5c;--ui:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',sans-serif}.ds-btn{cursor:pointer;border:0;border-radius:8px;padding:9px 14px;font:650 15px var(--ui);background:#fff;color:var(--ink);box-shadow:inset 0 0 0 2px #cdb88f,inset 0 -3px 0 #e6d6b2,0 2px 4px rgba(110,80,30,.22);transition:transform .08s,box-shadow .08s,background .15s}.ds-btn:hover{background:#fff8e6}.ds-btn:active{transform:translateY(2px);box-shadow:inset 0 0 0 2px #cdb88f}.ds-btn:focus-visible{outline:3px solid var(--focus);outline-offset:2px}.ds-btn-gold{background:var(--yellow);box-shadow:inset 0 0 0 2px var(--yellow-deep),inset 0 -3px 0 var(--yellow-deep),0 2px 4px rgba(120,80,10,.25)}.ds-btn-gold:hover{background:#ffd23d}.ds-btn-gold b{font-weight:800}"
+    },
+    {
+      "name": "Armed Danger Button",
+      "kind": "button",
+      "refersTo": "button-danger-armed",
+      "description": "Destructive action after the first click; reverts after 3.5s.",
+      "html": "<button class=\"ds-btn ds-btn-armed\" type=\"button\">Click again to reset</button>",
+      "css": ":host{--red:#d42a2a;--red-deep:#9e1c1f;--yellow:#f6c324;--yellow-deep:#c9971a;--cream:#fbf3df;--plank:#f4ead2;--ink:#2b1d14;--ink-soft:#5a4434;--sea-deep:#0f7f95;--slate:#26332d;--chalk:#f7f4ea;--brass:#c79a3e;--rope:#b88b52;--focus:#0f7f95;--display:'Josefin Sans','Century Gothic',sans-serif;--chalkface:'Josefin Sans','Century Gothic',sans-serif;--plum:#6d1f5c;--ui:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',sans-serif}.ds-btn{cursor:pointer;border:0;border-radius:8px;padding:9px 14px;font:650 15px var(--ui);background:#fff;color:var(--ink);box-shadow:inset 0 0 0 2px #cdb88f,inset 0 -3px 0 #e6d6b2,0 2px 4px rgba(110,80,30,.22);transition:transform .08s,box-shadow .08s,background .15s}.ds-btn:hover{background:#fff8e6}.ds-btn:active{transform:translateY(2px);box-shadow:inset 0 0 0 2px #cdb88f}.ds-btn:focus-visible{outline:3px solid var(--focus);outline-offset:2px}.ds-btn-armed{background:var(--ink);color:#fff;box-shadow:inset 0 -3px 0 #000,0 2px 5px rgba(0,0,0,.3)}"
+    },
+    {
+      "name": "Score Input",
+      "kind": "input",
+      "refersTo": "score-input",
+      "description": "Direct score entry, Josefin Sans 700 numerals, tabular.",
+      "html": "<input class=\"ds-score-in\" type=\"number\" value=\"31\" aria-label=\"Score\">",
+      "css": ":host{--red:#d42a2a;--red-deep:#9e1c1f;--yellow:#f6c324;--yellow-deep:#c9971a;--cream:#fbf3df;--plank:#f4ead2;--ink:#2b1d14;--ink-soft:#5a4434;--sea-deep:#0f7f95;--slate:#26332d;--chalk:#f7f4ea;--brass:#c79a3e;--rope:#b88b52;--focus:#0f7f95;--display:'Josefin Sans','Century Gothic',sans-serif;--chalkface:'Josefin Sans','Century Gothic',sans-serif;--plum:#6d1f5c;--ui:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',sans-serif}.ds-score-in{width:96px;padding:4px 6px;border-radius:10px;border:2px solid #cdb88f;background:#fff;color:var(--ink);font:700 44px/1 var(--display);text-align:center;font-variant-numeric:tabular-nums;-moz-appearance:textfield}.ds-score-in::-webkit-inner-spin-button{-webkit-appearance:none}.ds-score-in:focus-visible{outline:3px solid var(--focus);outline-offset:2px}"
+    },
+    {
+      "name": "Projector Switch",
+      "kind": "input",
+      "description": "Pill toggle; deep teal when on.",
+      "html": "<label class=\"ds-switch\"><input type=\"checkbox\" checked> Show timer on projector</label>",
+      "css": ":host{--red:#d42a2a;--red-deep:#9e1c1f;--yellow:#f6c324;--yellow-deep:#c9971a;--cream:#fbf3df;--plank:#f4ead2;--ink:#2b1d14;--ink-soft:#5a4434;--sea-deep:#0f7f95;--slate:#26332d;--chalk:#f7f4ea;--brass:#c79a3e;--rope:#b88b52;--focus:#0f7f95;--display:'Josefin Sans','Century Gothic',sans-serif;--chalkface:'Josefin Sans','Century Gothic',sans-serif;--plum:#6d1f5c;--ui:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',sans-serif}.ds-switch{display:inline-flex;align-items:center;gap:10px;font:600 15px var(--ui);color:var(--ink);cursor:pointer}.ds-switch input{appearance:none;width:44px;height:26px;border-radius:13px;background:#cdb88f;position:relative;margin:0;cursor:pointer;transition:background .15s}.ds-switch input::after{content:'';position:absolute;left:3px;top:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.3);transition:transform .15s}.ds-switch input:checked{background:var(--sea-deep)}.ds-switch input:checked::after{transform:translateX(18px)}.ds-switch input:focus-visible{outline:3px solid var(--focus);outline-offset:2px}"
+    },
+    {
+      "name": "Number Card",
+      "kind": "custom",
+      "refersTo": "number-card",
+      "description": "Signature: cream card on two brass hooks in a fixed slot; hover replays the drop-and-swing.",
+      "html": "<div class=\"ds-slot\"><span class=\"ds-hook l\"></span><span class=\"ds-hook r\"></span><div class=\"ds-card\"><b>7</b></div></div>",
+      "css": ":host{--red:#d42a2a;--red-deep:#9e1c1f;--yellow:#f6c324;--yellow-deep:#c9971a;--cream:#fbf3df;--plank:#f4ead2;--ink:#2b1d14;--ink-soft:#5a4434;--sea-deep:#0f7f95;--slate:#26332d;--chalk:#f7f4ea;--brass:#c79a3e;--rope:#b88b52;--focus:#0f7f95;--display:'Josefin Sans','Century Gothic',sans-serif;--chalkface:'Josefin Sans','Century Gothic',sans-serif;--plum:#6d1f5c;--ui:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',sans-serif}.ds-slot{position:relative;width:104px;height:157px;margin:20px}.ds-hook{position:absolute;top:-12px;width:10px;height:22px;border:3px solid var(--brass);border-bottom:none;border-radius:6px 6px 0 0;z-index:3}.ds-hook.l{left:24%}.ds-hook.r{right:24%}.ds-card{position:absolute;inset:0;border-radius:10px;background:linear-gradient(180deg,#fffaf0,var(--cream) 55%,#f1e5c8);display:grid;place-items:center;transform-origin:50% 0;box-shadow:0 12px 14px rgba(40,25,10,.35),inset 0 0 0 3px rgba(120,90,50,.18)}.ds-card::before{content:'';position:absolute;top:6px;left:24%;right:24%;height:10px;background:radial-gradient(circle at 5px 5px,#3a2a1c 3.5px,transparent 4.5px) left/10px 10px no-repeat,radial-gradient(circle at 5px 5px,#3a2a1c 3.5px,transparent 4.5px) right/10px 10px no-repeat}.ds-card b{font:700 130px/1 var(--display);color:var(--ink);font-variant-numeric:tabular-nums;margin-top:14px}.ds-slot:hover .ds-card{animation:ds-land .95s cubic-bezier(.2,.8,.25,1) both}@keyframes ds-land{0%{transform:translateY(-150%) rotate(-5deg)}38%{transform:translateY(4%) rotate(0)}52%{transform:translateY(-1%) rotate(3.5deg)}68%{transform:rotate(-2deg)}84%{transform:rotate(.8deg)}100%{transform:none}}@media (prefers-reduced-motion:reduce){.ds-slot:hover .ds-card{animation:none}}"
+    },
+    {
+      "name": "Team Badge",
+      "kind": "custom",
+      "refersTo": "team-badge",
+      "description": "Signature: the team's deck identity. Diagonal stripes in the team light color and badge white; name stroked in the team color; plum lead tag. The Candice subsets live only in the build, so this preview falls back to Josefin Sans for the name.",
+      "html": "<div class=\"ds-badge\" style=\"--tl:#9fd5f7;--tc:#1a8ae2\"><span class=\"ds-lead\">in the lead</span><h2 class=\"ds-names\"><span>Daring</span><span>Dolphins</span></h2></div>",
+      "css": ":host{--red:#d42a2a;--red-deep:#9e1c1f;--yellow:#f6c324;--yellow-deep:#c9971a;--cream:#fbf3df;--plank:#f4ead2;--ink:#2b1d14;--ink-soft:#5a4434;--sea-deep:#0f7f95;--slate:#26332d;--chalk:#f7f4ea;--brass:#c79a3e;--rope:#b88b52;--focus:#0f7f95;--display:'Josefin Sans','Century Gothic',sans-serif;--chalkface:'Josefin Sans','Century Gothic',sans-serif;--plum:#6d1f5c;--ui:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',sans-serif}.ds-badge{position:relative;width:380px;height:300px;border-radius:6px;overflow:hidden;background:repeating-linear-gradient(135deg,var(--tl) 0 24px,#fffdf3 24px 48px);box-shadow:inset 0 0 0 4px rgba(255,255,255,.55),inset 0 -6px 12px rgba(80,50,30,.12),0 4px 8px rgba(60,40,10,.18)}.ds-names{position:absolute;left:12px;right:8px;bottom:8px;margin:0;font:700 56px/1.02 'Candice Dolphins',var(--display);color:#fffdef;-webkit-text-stroke:.17em var(--tc);paint-order:stroke fill;text-shadow:0 6px 10px rgba(40,20,10,.25)}.ds-names span{display:block;white-space:nowrap}.ds-names span+span{padding-left:.5em}.ds-lead{position:absolute;left:20px;top:24px;font:700 26px/1 var(--display);color:#fff;background:var(--plum);padding:6px 10px 3px;border-radius:5px;transform:rotate(-4deg);box-shadow:0 4px 6px rgba(0,0,0,.25);white-space:nowrap}"
+    },
+    {
+      "name": "Chalk Slate",
+      "kind": "custom",
+      "refersTo": "chalk-slate",
+      "description": "Transient handwritten note hung on two wires under a plank.",
+      "html": "<div class=\"ds-slate\">+10 · 1st place</div>",
+      "css": ":host{--red:#d42a2a;--red-deep:#9e1c1f;--yellow:#f6c324;--yellow-deep:#c9971a;--cream:#fbf3df;--plank:#f4ead2;--ink:#2b1d14;--ink-soft:#5a4434;--sea-deep:#0f7f95;--slate:#26332d;--chalk:#f7f4ea;--brass:#c79a3e;--rope:#b88b52;--focus:#0f7f95;--display:'Josefin Sans','Century Gothic',sans-serif;--chalkface:'Josefin Sans','Century Gothic',sans-serif;--plum:#6d1f5c;--ui:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',sans-serif}.ds-slate{position:relative;display:inline-block;margin-top:32px;background:var(--slate);color:var(--chalk);border:6px solid #9a7446;border-radius:6px;padding:6px 22px 8px;font:700 40px/1 var(--chalkface);white-space:nowrap;box-shadow:0 10px 14px rgba(0,0,0,.35)}.ds-slate::before,.ds-slate::after{content:'';position:absolute;top:-36px;width:3px;height:30px;background:#6b5a44}.ds-slate::before{left:24%;transform:rotate(14deg)}.ds-slate::after{right:24%;transform:rotate(-14deg)}"
+    },
+    {
+      "name": "Desk Box",
+      "kind": "card",
+      "refersTo": "desk-box",
+      "description": "Control-view container: cream, Josefin Sans heading, warm shadow.",
+      "html": "<section class=\"ds-box\"><h2>Timer</h2><p>Open the projector window, then press <kbd>F</kbd> for fullscreen.</p></section>",
+      "css": ":host{--red:#d42a2a;--red-deep:#9e1c1f;--yellow:#f6c324;--yellow-deep:#c9971a;--cream:#fbf3df;--plank:#f4ead2;--ink:#2b1d14;--ink-soft:#5a4434;--sea-deep:#0f7f95;--slate:#26332d;--chalk:#f7f4ea;--brass:#c79a3e;--rope:#b88b52;--focus:#0f7f95;--display:'Josefin Sans','Century Gothic',sans-serif;--chalkface:'Josefin Sans','Century Gothic',sans-serif;--plum:#6d1f5c;--ui:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',sans-serif}.ds-box{background:var(--cream);border-radius:12px;padding:18px 20px;box-shadow:0 1px 3px rgba(90,60,30,.18),0 10px 22px rgba(90,60,30,.16);color:var(--ink);font:400 14px/1.45 var(--ui);max-width:420px}.ds-box h2{margin:0 0 12px;font:700 20px/1 var(--display);letter-spacing:.01em}.ds-box p{margin:0;color:var(--ink-soft)}.ds-box kbd{font:600 12px var(--ui);background:#fff;box-shadow:inset 0 0 0 1px #cdb88f,inset 0 -2px 0 #e3d3b0;border-radius:4px;padding:1px 5px;color:var(--ink)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Lifeguard Tower Board",
+    "overview": "The projected scoreboard is a physical object: a sun-faded red header plank and four pale weathered team planks hung by rope from a crossbeam between two lifeguard-tower posts, standing on a beach of sky, ocean teal and sand. Every score and every timer digit is a cream wooden number card hanging from two brass hooks. Nothing glows, nothing is glass. Depth comes from paint over wood, soft cast shadows, brass bolts and rope, and the weight of cards that fall and swing.\n\nThe board speaks the show deck's language. Lettering is the deck's Josefin Sans, the show name carries the deck's plum drop shade, and each team keeps the identity it has in the deck: its own outline color, its pale stripe color and its Candice team-name lettering, set on a striped badge beside its animal. The tower supplies the hardware; the deck supplies the type and the team identities.\n\nThe board is composed once at a fixed 1920x1080 stage and scaled uniformly to the screen, so the room always sees the same picture. Density is low and type is huge: numerals are the content, everything else is hardware that holds them up. Texture is generated, not photographed: an `feTurbulence` wood grain multiplied over the paint and the team badges, bare-wood flakes masked to plank edges, plank seams, sand grain over the beach and a sun-fade on the red header.\n\nThe operator's control window is the same world at desk scale: sand-paper ground, cream boxes, Josefin Sans for headings and the large score readouts, team adjectives in their team colors, and a plain system UI face for everything the operator reads under pressure. It borrows the palette and the display face, not the wood.",
+    "keyCharacteristics": [
+      "Painted wood, rope and brass; no gradients-as-glow, no glass, no neon.",
+      "One bold geometric face (Josefin Sans 700) for everything the audience reads; Candice only for team names.",
+      "Each team carries its deck identity: outline color, stripe color, Candice name, animal art.",
+      "Fixed digit slots: a number never reflows, a card swaps in place.",
+      "Change is a physical event: cards fall off hooks, new cards drop on with weight and swing.",
+      "Fixed 16:9 stage scaled to fit and clipped to its frame, never reflowed."
+    ],
+    "rules": [
+      {
+        "name": "The Paint Not Light Rule",
+        "body": "Color is paint on a surface. It is laid flat over wood grain and shaded by soft cast shadows; it never glows, blooms or gradients toward neon. The only gradients are physical: sky to sea to sand, a sun-fade on the red sign, the curve of a cream card, and the painted stripes of a team badge.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two Flag Colors Rule",
+        "body": "Red and yellow are the lifeguard's signal colors and carry board state: red marks the header, the leader's flag and the TIME! moment; yellow holds the numbers. Team colors identify teams and never signal state.",
+        "section": "colors"
+      },
+      {
+        "name": "The Deck Identity Rule",
+        "body": "A team's two colors belong to that team alone, and they always travel with its name and animal. Color is never the only thing that tells two teams apart.",
+        "section": "colors"
+      },
+      {
+        "name": "The Back Row Rule",
+        "body": "If the audience reads it, it is set in Josefin Sans 700, except team names. System sans never appears on the projector.",
+        "section": "typography"
+      },
+      {
+        "name": "The Team Signature Rule",
+        "body": "Candice is only ever a team's two-word name. Each subset holds only that name's glyphs, so any other text in Candice will fail to render.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tabular Rule",
+        "body": "Every numeral that can change uses tabular figures in a fixed-width slot, so a 1 never shifts its neighbors.",
+        "section": "typography"
+      },
+      {
+        "name": "The Gravity Rule",
+        "body": "Every shadow falls down and warm. Nothing floats on a neutral gray blur.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Sign-Painter Shade Rule",
+        "body": "A hard offset shade belongs only to painted lettering on a painted sign, in plum (the show name) or the sign's own deep tone. It never sits under a box, card or button.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** put every changing number on a cream card in a fixed hooked slot, with tabular Josefin Sans numerals.",
+      "**Do** make changes physical: fall, drop with weight, swing to rest, then a single chalk afterglow.",
+      "**Do** build surfaces as paint over generated wood grain, with bare wood showing only at plank edges.",
+      "**Do** hang things: rope, hooks, bolts and wires explain why every object is where it is.",
+      "**Do** give each team its deck identity together: outline color, stripe color, Candice name and animal art.",
+      "**Do** keep red and yellow for board state, and team colors for team identity.",
+      "**Do** honor `prefers-reduced-motion`: all animation and transition off, the placard simply present at time's up.",
+      "**Do** keep the control view in the palette and Josefin Sans, with system UI text for operator reading."
+    ],
+    "donts": [
+      "**Don't** use glossy game-show panels, glowing gradients, glass or neon.",
+      "**Don't** let a number reflow its neighbors or change width as it updates.",
+      "**Don't** set audience-facing text in the system sans.",
+      "**Don't** put hard offset shadows under boxes, cards or buttons; that shade belongs to painted lettering only.",
+      "**Don't** set anything but a team's own two-word name in Candice; each subset holds only that name's glyphs.",
+      "**Don't** use a team's colors for another team, for board state, or as the only way to tell teams apart."
+    ]
+  }
+}

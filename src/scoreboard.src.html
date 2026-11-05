@@ -1,0 +1,696 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Friendship Island Scoreboard</title>
+<style>
+@font-face{font-family:'Josefin Sans';src:url({{asset:JosefinSans.woff2}}) format('woff2');font-weight:100 700;font-display:block}
+
+:root{
+  --red:#d42a2a; --red-deep:#9e1c1f; --yellow:#f6c324; --yellow-deep:#c9971a;
+  --cream:#fbf3df; --plank:#f4ead2; --bare:#d6bd8f; --ink:#2b1d14; --ink-soft:#5a4434;
+  --sea:#17a3b5; --sea-deep:#0f7f95; --sky:#a8e6ec; --sand:#ead09c; --sand-deep:#d8b77a;
+  --slate:#26332d; --chalk:#f7f4ea; --brass:#c79a3e; --rope:#b88b52;
+  --focus:#0f7f95;
+  --display:'Josefin Sans', 'Century Gothic', sans-serif;
+  --chalkface:'Josefin Sans', 'Century Gothic', sans-serif;
+  --plum:#6d1f5c;
+  --ui:'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--sand);color:var(--ink);font-family:var(--ui)}
+::selection{background:var(--yellow);color:var(--ink)}
+[hidden]{display:none!important}
+
+/* ============ PROJECTOR VIEW ============ */
+.world{position:fixed;inset:0;overflow:hidden;
+  background:
+    linear-gradient(180deg,var(--sky) 0%,#c9f0f1 30%,var(--sea) 30.5%,var(--sea-deep) 44%,var(--sand) 44.5%,var(--sand-deep) 100%);
+  cursor:default}
+.world.idle{cursor:none}
+/* first frame lands in the saved view without playing the view-change motion */
+.world.boot *{transition:none!important;animation:none!important}
+.world::after{content:"";position:absolute;inset:0;background:var(--sandgrain);opacity:.55;pointer-events:none;mix-blend-mode:multiply}
+.stage{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform-origin:0 0;overflow:hidden}
+
+/* painted wood: paint + chips of bare wood + grain */
+.wood{background-image:var(--fade,linear-gradient(transparent,transparent)),var(--seams,linear-gradient(transparent,transparent)),var(--grain);background-color:var(--paint,var(--plank));background-size:100% 100%,100% 100%,900px 180px;position:relative;isolation:isolate}
+.wood::before{content:"";position:absolute;inset:0;border-radius:inherit;z-index:-1;pointer-events:none;background:var(--chips);background-size:640px 320px;
+  -webkit-mask:linear-gradient(90deg,#000,transparent 13%,transparent 87%,#000),linear-gradient(180deg,#000,transparent 20%,transparent 80%,#000);-webkit-mask-composite:source-over;
+  mask:linear-gradient(90deg,#000,transparent 13%,transparent 87%,#000),linear-gradient(180deg,#000,transparent 20%,transparent 80%,#000);mask-composite:add}
+.bolt{position:absolute;width:18px;height:18px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#f3dc9b,var(--brass) 45%,#7a5a1d 100%);
+  box-shadow:0 2px 3px rgba(0,0,0,.35)}
+
+/* name sign: one short plank centred at the top, holding only the show name */
+.sign{position:absolute;left:50%;top:30px;height:128px;transform:translateX(-50%);z-index:4;--paint:var(--red);--fade:linear-gradient(180deg,rgba(255,226,200,.34),rgba(255,226,200,.08) 38%,transparent 60%),radial-gradient(60% 120% at 22% 30%,rgba(255,220,190,.16),transparent 70%),radial-gradient(40% 90% at 78% 70%,rgba(80,0,0,.14),transparent 70%);--seams:linear-gradient(180deg,transparent 0 63px,rgba(60,10,10,.35) 63px 65px,rgba(255,255,255,.18) 65px 67px,transparent 67px);border-radius:8px;
+  display:flex;align-items:center;padding:0 64px;
+  box-shadow:0 14px 24px rgba(60,20,10,.35),inset 0 -8px 0 rgba(0,0,0,.12),inset 0 6px 0 rgba(255,255,255,.12)}
+.sign .bolt.tl{left:14px;top:14px}.sign .bolt.bl{left:14px;bottom:14px}.sign .bolt.tr{right:14px;top:14px}.sign .bolt.br{right:14px;bottom:14px}
+.sign::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:var(--grain);background-size:900px 180px;mix-blend-mode:multiply;opacity:.45}
+.title{font:700 76px/1 var(--display);color:var(--cream);letter-spacing:.01em;margin:12px 0 0;white-space:nowrap;
+  text-shadow:4px 5px 0 var(--plum),5px 8px 10px rgba(0,0,0,.25)}
+.sign.flash{animation:signflash .5s steps(1) 6}
+@keyframes signflash{0%{--paint:var(--yellow)}50%{--paint:var(--red)}}
+
+/* timer view: a yellow clock board hung from the name sign, centred on the stage */
+.clockboard{position:absolute;left:50%;top:390px;width:900px;height:420px;margin-left:-450px;z-index:3;
+  --paint:var(--yellow);border-radius:12px;display:grid;place-items:center;padding-top:14px;
+  box-shadow:0 22px 34px rgba(40,25,10,.4),inset 0 0 0 4px rgba(150,100,10,.25),inset 0 -8px 0 rgba(150,100,10,.18);
+  transform:translateY(-900px);transform-origin:50% -200px;transition:transform .42s cubic-bezier(.55,0,.9,.4)}
+.clockboard .bolt.a{left:14px;top:14px}.clockboard .bolt.b{right:14px;top:14px}
+.clockboard .rope{top:-232px;height:236px;width:10px}
+.clockboard .rope.a{left:150px}.clockboard .rope.b{right:150px}
+.timer-view .clockboard{transform:none;animation:clockdrop 1.25s cubic-bezier(.2,.8,.25,1) .12s both}
+@keyframes clockdrop{
+  0%{transform:translateY(-900px) rotate(-3deg)}
+  42%{transform:translateY(10px) rotate(0)}
+  56%{transform:translateY(-4px) rotate(1.6deg)}
+  72%{transform:rotate(-.9deg)}
+  88%{transform:rotate(.35deg)}
+  100%{transform:none}}
+.clock{display:flex;align-items:center;gap:16px}
+.clock .slot{width:186px;height:280px}
+.clock .card b{font-size:240px;margin-top:26px}
+.nails{display:flex;flex-direction:column;gap:72px;padding:0 4px}
+.nails i{width:28px;height:28px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff3c4,var(--yellow) 50%,var(--yellow-deep));box-shadow:0 3px 4px rgba(90,60,10,.35)}
+
+/* team cards: a 2x2 grid in the scores view; in the timer view each card shrinks
+   and slides straight out to its own side, two per side, around the centred clock */
+.teams{position:absolute;inset:0}
+.tcard{position:absolute;width:880px;height:410px;display:flex;gap:20px;padding:20px;border-radius:10px;--paint:var(--plank);
+  --seams:linear-gradient(90deg,transparent 0 438px,rgba(70,45,20,.22) 438px 440px,rgba(255,255,255,.3) 440px 442px,transparent 442px);
+  box-shadow:0 18px 26px rgba(40,25,10,.38),inset 0 -8px 0 rgba(90,60,30,.12);
+  transform-origin:0 0;transition:transform .75s cubic-bezier(.16,1,.3,1) .28s}
+.tcard:nth-child(1){left:60px;top:196px}
+.tcard:nth-child(2){left:980px;top:196px}
+.tcard:nth-child(3){left:60px;top:636px}
+.tcard:nth-child(4){left:980px;top:636px}
+/* timer view targets: 50% scale, left column x 30, right column x 1450, rows at y 380 and 615 */
+.timer-view .tcard{transition-delay:0s}
+.timer-view .tcard:nth-child(1){transform:translate(-30px,184px) scale(.5)}
+.timer-view .tcard:nth-child(2){transform:translate(470px,184px) scale(.5)}
+.timer-view .tcard:nth-child(3){transform:translate(-30px,-21px) scale(.5)}
+.timer-view .tcard:nth-child(4){transform:translate(470px,-21px) scale(.5)}
+.tcard>.bolt{width:14px;height:14px}
+.tcard>.bolt.tl{left:8px;top:8px}.tcard>.bolt.tr{right:8px;top:8px}.tcard>.bolt.bl{left:8px;bottom:8px}.tcard>.bolt.br{right:8px;bottom:8px}
+.rope{position:absolute;width:8px;background:repeating-linear-gradient(160deg,var(--rope) 0 5px,#8c6234 5px 8px);border-radius:3px}
+
+.badge{position:relative;flex:none;width:400px;height:370px;border-radius:6px;overflow:hidden;
+  background:repeating-linear-gradient(135deg,var(--tl) 0 24px,#fffdf3 24px 48px);
+  box-shadow:inset 0 0 0 4px rgba(255,255,255,.55),inset 0 -6px 12px rgba(80,50,30,.12),0 4px 8px rgba(60,40,10,.18)}
+.badge::after{content:"";position:absolute;inset:0;background:var(--grain);background-size:900px 180px;mix-blend-mode:multiply;opacity:.35;pointer-events:none}
+/* team emblem (animal + its deck prop), centred above the plate; centred in the whole badge once the plate is gone.
+   While the team leads it steps right and a little smaller to make room for the flag in the badge corner.
+   z-index lifts it above the badge's grain overlay, which otherwise streaks the pale seal like see-through stripes. */
+.animal{position:absolute;z-index:1;left:50%;top:10px;height:272px;width:auto;max-width:90%;object-fit:contain;transform-origin:50% 50%;
+  --ax:0px;--ay:0px;--as:1;transform:translateX(calc(-50% + var(--ax))) translateY(var(--ay)) scale(var(--as));
+  filter:drop-shadow(0 8px 6px rgba(40,25,10,.28));transition:transform .75s cubic-bezier(.16,1,.3,1) .28s}
+.timer-view .animal{--ay:39px;--as:1.08;transition-delay:0s}
+.lead .animal{--ax:58px;--as:.84;transition:transform .6s cubic-bezier(.16,1,.3,1)}
+.timer-view .lead .animal{--ax:58px;--ay:39px;--as:.92}
+/* name plate: the team's own colour, painted lettering; picture-only once the card is small */
+.plate{position:absolute;left:0;right:0;bottom:0;height:80px;margin:0;z-index:2;background:var(--tc);
+  display:grid;place-items:center;padding-top:7px;
+  font:700 48px/1 var(--display);color:#fff;letter-spacing:.01em;white-space:nowrap;
+  text-shadow:3px 4px 0 rgba(0,0,0,.22);box-shadow:inset 0 5px 0 rgba(255,255,255,.18);
+  transition:opacity .35s .4s}
+.plate span{display:inline-block}
+.timer-view .plate{opacity:0;transition-delay:0s}
+/* leader flag: a lifeguard flag planted in the top-left corner of the team's own badge */
+.flagpost{position:absolute;left:18px;top:0;width:120px;height:204px;z-index:1;pointer-events:none}
+.holder{position:absolute;left:-5px;bottom:-26px;width:19px;height:34px;border-radius:4px;
+  background:linear-gradient(90deg,#7a5a1d,var(--brass),#7a5a1d);box-shadow:0 2px 3px rgba(0,0,0,.3);opacity:0;transition:opacity .3s .5s}
+.lead .holder{opacity:1;transition-delay:0s}
+.flag{position:absolute;left:0;bottom:6px;width:9px;height:0;background:linear-gradient(90deg,#8c6234,#d7b47b,#8c6234);border-radius:4px;
+  transition:height .5s cubic-bezier(.4,0,.9,.5) .3s}
+/* motion only on change: rising = pole up, then flag unfurls and flutters once;
+   losing the lead = flag furls, then pole drops. At rest the flag is still. */
+.flag i{position:absolute;left:9px;top:3px;width:94px;height:62px;transform-origin:left center;
+  background:linear-gradient(180deg,var(--red) 0 50%,var(--yellow) 50%);border-radius:0 3px 3px 0;
+  box-shadow:0 5px 7px rgba(0,0,0,.25);transform:scaleX(0);transition:transform .3s cubic-bezier(.4,0,.9,.5)}
+.lead .flag{height:184px;transition:height .55s cubic-bezier(.2,.9,.2,1)}
+.lead .flag i{transform:scaleX(1);transition:transform .35s .45s cubic-bezier(.2,.9,.2,1);animation:wave 1.1s ease-in-out .8s 1}
+@keyframes wave{0%,100%{transform:scaleX(1) skewY(0)}35%{transform:scaleX(.93) skewY(3deg)}70%{transform:scaleX(.98) skewY(-1.5deg)}}
+
+.panel{position:relative;flex:1;height:370px;border-radius:6px;--paint:var(--yellow);
+  display:flex;justify-content:center;align-items:center;gap:18px;padding-top:16px;
+  box-shadow:inset 0 0 0 4px rgba(150,100,10,.25),0 6px 10px rgba(60,40,10,.2)}
+.panel .bolt{top:10px;width:14px;height:14px}.panel .bolt.a{left:10px}.panel .bolt.b{right:10px}
+.panel .slot{width:178px;height:270px}
+.panel .card b{font-size:228px;margin-top:24px}
+
+/* number cards */
+.slot{position:relative;width:156px;height:236px}
+.slot .hook{position:absolute;top:-16px;width:14px;height:30px;border:4px solid var(--brass);border-bottom:none;border-radius:8px 8px 0 0;z-index:3}
+.slot .hook.l{left:24%}.slot .hook.r{right:24%}
+.card{position:absolute;inset:0;border-radius:10px;background:linear-gradient(180deg,#fffaf0,var(--cream) 55%,#f1e5c8);
+  display:grid;place-items:center;transform-origin:50% 0;
+  box-shadow:0 12px 14px rgba(40,25,10,.35),inset 0 0 0 3px rgba(120,90,50,.18)}
+.card::before{content:"";position:absolute;top:9px;left:24%;right:24%;height:14px;
+  background:radial-gradient(circle at 7px 7px,#3a2a1c 5px,transparent 6px) left/14px 14px no-repeat,
+             radial-gradient(circle at 7px 7px,#3a2a1c 5px,transparent 6px) right/14px 14px no-repeat}
+.card b{font:700 196px/1 var(--display);color:var(--ink);font-variant-numeric:tabular-nums;margin-top:20px}
+.card.out{z-index:1}
+.fall{animation:fall .48s cubic-bezier(.55,0,.9,.4) forwards}
+@keyframes fall{to{transform:translateY(150%) rotate(9deg);opacity:0}}
+.land{z-index:2;animation:land .95s cubic-bezier(.2,.8,.25,1) both}
+@keyframes land{
+  0%{transform:translateY(-150%) rotate(-5deg)}
+  38%{transform:translateY(4%) rotate(0)}
+  52%{transform:translateY(-1%) rotate(3.5deg)}
+  68%{transform:rotate(-2deg)}
+  84%{transform:rotate(.8deg)}
+  100%{transform:none}}
+.chalk::after{content:"";position:absolute;inset:-9px;border-radius:14px;border:4px dashed rgba(255,255,255,.95);
+  animation:chalkfade 1.6s ease-out .4s both}
+@keyframes chalkfade{0%{opacity:0}15%{opacity:1}100%{opacity:0}}
+.flick{animation:flick .22s ease-in forwards}
+@keyframes flick{to{transform:translateY(40%);opacity:0}}
+.drop{z-index:2;animation:drop .28s cubic-bezier(.2,.8,.25,1) both}
+@keyframes drop{from{transform:translateY(-35%);opacity:0}}
+
+/* chalk slate note, pinned over the top edge of the score panel */
+.slate{position:absolute;left:650px;top:-24px;z-index:5;transform-origin:50% 0;transform:translateX(-50%);
+  background:var(--slate);color:var(--chalk);border:6px solid #9a7446;border-radius:6px;padding:6px 22px 8px;
+  font:700 40px/1 var(--chalkface);white-space:nowrap;box-shadow:0 10px 14px rgba(0,0,0,.35);
+  opacity:0;transition:opacity .5s}
+.slate.on{opacity:1;animation:swing 1.4s ease-out}
+@keyframes swing{0%{transform:translateX(-50%) rotate(14deg)}30%{transform:translateX(-50%) rotate(-8deg)}55%{transform:translateX(-50%) rotate(4deg)}80%{transform:translateX(-50%) rotate(-1.5deg)}100%{transform:translateX(-50%) rotate(0)}}
+
+/* time's up */
+.placard{position:absolute;left:50%;top:-560px;width:880px;height:400px;margin-left:-440px;z-index:20;
+  --paint:var(--yellow);border-radius:12px;display:grid;place-items:center;
+  box-shadow:0 30px 50px rgba(30,15,5,.5),inset 0 0 0 10px var(--red);transform-origin:50% -200px}
+.placard b{font:700 230px/1 var(--display);color:var(--red);text-shadow:6px 8px 0 var(--red-deep);letter-spacing:.02em}
+.placard .rope{top:-260px;height:262px;width:10px}
+.placard .rope.a{left:130px}.placard .rope.b{right:130px}
+.timesup .placard{top:400px;animation:placard 1.3s cubic-bezier(.2,.8,.25,1) both}
+@keyframes placard{0%{top:-560px;transform:rotate(-4deg)}45%{top:420px}60%{transform:rotate(3deg)}78%{transform:rotate(-1.5deg)}100%{top:400px;transform:none}}
+.shudder{animation:shudder .6s linear}
+@keyframes shudder{0%,100%{translate:0 0}15%{translate:-10px 3px}30%{translate:9px -4px}45%{translate:-7px 2px}60%{translate:6px -2px}75%{translate:-3px 1px}}
+.timesup .clock .card b{color:var(--red)}
+
+.hint{position:fixed;left:24px;bottom:24px;background:var(--slate);color:var(--chalk);
+  font:700 26px/1 var(--chalkface);padding:12px 22px;border-radius:8px;box-shadow:0 8px 16px rgba(0,0,0,.3);
+  transition:opacity .6s;z-index:50}
+.hint.gone{opacity:0;pointer-events:none}
+
+/* ============ CONTROL VIEW ============ */
+.control{min-height:100%;background-color:#efe1c0;background-image:var(--sandgrain);padding:20px 24px 32px}
+.bar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.bar h1{margin:0;font:700 30px/1 var(--display);color:var(--red)}
+.bar h1 span{color:var(--ink)}
+.status{display:inline-flex;align-items:center;gap:8px;font-size:15px;color:var(--ink-soft);margin-left:auto}
+.status i{width:12px;height:12px;border-radius:50%;background:#b9a98a;box-shadow:inset 0 0 0 2px rgba(0,0,0,.15)}
+.status.on i{background:#2e9e5b}
+.status.on{color:var(--ink)}
+.grid{display:grid;grid-template-columns:minmax(420px,1fr) minmax(560px,1.25fr);gap:20px;align-items:start}
+.box{background:var(--cream);border-radius:12px;padding:18px 20px;box-shadow:0 1px 3px rgba(90,60,30,.18),0 10px 22px rgba(90,60,30,.16)}
+.box+.box{margin-top:20px}
+.box h2{margin:0 0 12px;font:700 20px/1 var(--display);color:var(--ink);letter-spacing:.01em}
+.preview{position:relative;aspect-ratio:16/9;border-radius:8px;overflow:hidden;background:var(--sea);box-shadow:inset 0 0 0 2px rgba(0,0,0,.12)}
+.preview iframe{position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none}
+.help{margin:10px 0 0;font-size:14px;line-height:1.45;color:var(--ink-soft)}
+.help kbd{font:600 12px var(--ui);background:#fff;box-shadow:inset 0 0 0 1px #c9b48c,inset 0 -2px 0 #e3d3b0;border-radius:4px;padding:1px 5px;color:var(--ink)}
+
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;border:0;border-radius:8px;padding:9px 14px;font-weight:650;font-size:15px;background:#fff;color:var(--ink);
+  box-shadow:inset 0 0 0 2px #cdb88f,inset 0 -3px 0 #e6d6b2,0 2px 4px rgba(110,80,30,.22);transition:transform .08s,box-shadow .08s,background .15s}
+button:hover{background:#fff8e6}
+button:active{transform:translateY(2px);box-shadow:inset 0 0 0 2px #cdb88f}
+button:disabled{opacity:.45;cursor:not-allowed;transform:none}
+button.primary{background:var(--red);color:#fff;box-shadow:inset 0 -3px 0 var(--red-deep),0 2px 5px rgba(120,20,20,.3)}
+button.primary:hover{background:#c22424}
+button.gold{background:var(--yellow);box-shadow:inset 0 0 0 2px var(--yellow-deep),inset 0 -3px 0 var(--yellow-deep),0 2px 4px rgba(120,80,10,.25)}
+button.gold:hover{background:#ffd23d}
+button.danger.armed{background:var(--ink);color:#fff;box-shadow:inset 0 -3px 0 #000,0 2px 5px rgba(0,0,0,.3)}
+button:focus-visible,input:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+button svg{width:16px;height:16px;vertical-align:-3px;margin-right:6px}
+
+.clockface{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.readout{font:700 72px/1 var(--display);font-variant-numeric:tabular-nums;color:var(--ink);min-width:4.3ch}
+.readout.up{color:var(--red)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row+.row{margin-top:12px}
+.label{font-size:13px;font-weight:650;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em;margin-right:4px}
+.custom input{width:64px;padding:8px 10px;border-radius:8px;border:2px solid #cdb88f;background:#fff;font-weight:650;text-align:center;font-variant-numeric:tabular-nums}
+.custom label{display:inline-flex;align-items:center;gap:6px;font-weight:650;color:var(--ink-soft)}
+.custom .label{min-width:5.6em}
+.clockface+.row .label{min-width:5.6em}
+/* view toggle: two joined buttons, the shown view pressed in deep teal */
+.seg{display:inline-flex}
+.seg button{border-radius:0;min-width:96px}
+.seg button:first-child{border-radius:8px 0 0 8px}
+.seg button:last-child{border-radius:0 8px 8px 0;margin-left:-2px}
+.views{flex-direction:column;justify-content:center;gap:10px;margin-top:18px}
+.views .seg button{min-width:160px;padding:14px 24px;font-size:20px}
+.seg button[aria-pressed="true"]{background:var(--sea-deep);color:#fff;box-shadow:inset 0 -3px 0 #0a5f70,0 2px 4px rgba(10,80,95,.3);position:relative;z-index:1}
+
+.team{display:grid;grid-template-columns:56px 1fr auto;gap:10px 14px;align-items:center;padding:12px 0}
+.team+.team{border-top:2px dashed #e2d2ad}
+.team img{width:56px;height:56px;object-fit:contain}
+.team .who strong{font:700 24px/1.1 var(--display)}
+.team button{padding:9px 14px;min-width:56px;font-size:17px}
+
+.split{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:4px}
+.split .push{margin-left:auto}
+@media (max-width:1100px){.grid{grid-template-columns:1fr}}
+@media (max-width:640px){.control{padding:16px}.box{padding:16px}.team{grid-template-columns:48px 1fr;gap:10px 12px}.team img{width:48px;height:48px}.team .row{grid-column:1/-1}.status{margin-left:0}}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .timesup .placard{top:400px}
+}
+</style>
+</head>
+<body>
+
+<!-- Projector view -->
+<div class="world" id="display" hidden>
+  <div class="stage" id="stage">
+    <header class="sign wood" id="sign">
+      <span class="bolt tl"></span><span class="bolt bl"></span><span class="bolt tr"></span><span class="bolt br"></span>
+      <h1 class="title">Friendship Island</h1>
+    </header>
+    <div class="clockboard wood" id="clockboard">
+      <span class="rope a"></span><span class="rope b"></span>
+      <span class="bolt a"></span><span class="bolt b"></span>
+      <div class="clock" id="clock" aria-label="Time remaining"></div>
+    </div>
+    <section class="teams" id="teams" aria-label="Team scores"></section>
+    <div class="placard wood" aria-hidden="true"><span class="rope a"></span><span class="rope b"></span><b>TIME!</b></div>
+  </div>
+  <div class="hint" id="hint">Press F for fullscreen</div>
+</div>
+
+<!-- Control view -->
+<main class="control" id="control" hidden>
+  <div class="bar">
+    <h1>Friendship Island <span>Control</span></h1>
+    <span class="status" id="status"><i></i><span>Scoreboard window not open</span></span>
+    <button class="primary" id="popOut" type="button">Pop out over slides</button>
+    <span class="help" id="popNote" style="margin:0" hidden>Pop-out needs Chrome or Edge. Use the projector window instead.</span>
+    <button id="openProjector" type="button">Open projector window</button>
+  </div>
+  <div class="grid">
+    <div>
+      <section class="box">
+        <h2>Preview</h2>
+        <div class="preview"><iframe id="preview" title="Live preview of the projector view" tabindex="-1"></iframe></div>
+        <div class="row views">
+          <span class="label">Board shows</span>
+          <div class="seg" role="group" aria-label="Board shows">
+            <button type="button" data-view="scores" aria-pressed="true">Scores</button>
+            <button type="button" data-view="timer" aria-pressed="false">Timer</button>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div>
+      <section class="box">
+        <div class="split">
+          <h2 style="margin:0">Scores</h2>
+          <button class="danger push" id="resetScores" type="button">Reset all scores</button>
+        </div>
+        <div id="teamControls"></div>
+      </section>
+      <section class="box">
+        <h2>Timer</h2>
+        <div class="clockface">
+          <div class="readout" id="readout">10:00</div>
+          <div class="row">
+            <button class="primary" id="startPause" type="button">Start</button>
+            <button id="resetTimer" type="button">Reset</button>
+          </div>
+        </div>
+        <div class="row" style="margin-top:16px">
+          <span class="label">Quick set</span>
+          <button class="gold" data-preset="180" type="button">3 min</button>
+          <button class="gold" data-preset="300" type="button">5 min</button>
+          <button class="gold" data-preset="600" type="button">10 min</button>
+        </div>
+        <form class="custom row" id="custom">
+          <span class="label">Custom</span>
+          <label><input id="cMin" type="number" min="0" max="99" value="2"> min</label>
+          <label><input id="cSec" type="number" min="0" max="59" value="30"> sec</label>
+          <button type="submit">Set timer</button>
+        </form>
+      </section>
+    </div>
+  </div>
+</main>
+
+<script>
+(() => {
+  const TEAMS = [
+    { adj: 'Fierce', name: 'Flamingos', img: '{{asset:team-flamingo.webp}}', color: '#c85a8a', light: '#f8bfd5' },
+    { adj: 'Lucky', name: 'Lobsters', img: '{{asset:team-lobster.webp}}', color: '#bc1c34', light: '#f6a9ab' },
+    { adj: 'Daring', name: 'Dolphins', img: '{{asset:team-dolphin.webp}}', color: '#1a8ae2', light: '#9fd5f7' },
+    { adj: 'Snazzy', name: 'Seals', img: '{{asset:team-seal.webp}}', color: '#6a84aa', light: '#bfd0ee' },
+  ];
+  const KEY = 'friendship-island-board-v1';
+  const PING = 'friendship-island-projector-ping';
+  const NOTE_MS = 6000;
+  const MAX = 99;
+  // #display = projector window, #pip = always-on-top pop-out, #preview = control-view thumbnail
+  const mode = { '#display': 'display', '#pip': 'pip', '#preview': 'preview' }[location.hash] || 'control';
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- textures (generated once, offline) ---------- */
+  const svgUri = s => `url("data:image/svg+xml,${encodeURIComponent(s)}")`;
+  const grain = svgUri(`<svg xmlns="http://www.w3.org/2000/svg" width="900" height="180"><filter id="g" x="0" y="0"><feTurbulence type="fractalNoise" baseFrequency="0.0035 0.16" numOctaves="4" seed="7"/><feColorMatrix values="0 0 0 0 0.36  0 0 0 0 0.22  0 0 0 0 0.11  0 0 0 2.3 -1.08"/></filter><rect width="100%" height="100%" filter="url(#g)"/></svg>`);
+  const chips = svgUri(`<svg xmlns="http://www.w3.org/2000/svg" width="640" height="320"><filter id="c" x="0" y="0"><feTurbulence type="fractalNoise" baseFrequency="0.006 0.022" numOctaves="4" seed="11"/><feColorMatrix values="0 0 0 0 0.86  0 0 0 0 0.77  0 0 0 0 0.6  1.6 0 0 0 -0.62"/><feComponentTransfer><feFuncA type="discrete" tableValues="0 1"/></feComponentTransfer></filter><rect width="100%" height="100%" filter="url(#c)"/></svg>`);
+  const sandgrain = svgUri(`<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><filter id="s"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3"/><feColorMatrix values="0 0 0 0 0.55  0 0 0 0 0.42  0 0 0 0 0.25  0 0 0 1.6 -0.75"/></filter><rect width="100%" height="100%" filter="url(#s)"/></svg>`);
+  const rs = document.documentElement.style;
+  rs.setProperty('--grain', grain); rs.setProperty('--chips', chips); rs.setProperty('--sandgrain', sandgrain);
+
+  /* ---------- state ---------- */
+  const fresh = () => ({
+    scores: [0, 0, 0, 0],
+    last: [null, null, null, null],
+    timer: { duration: 600000, remaining: 600000, running: false, endsAt: 0 },
+    view: 'scores', // 'scores' | 'timer'
+  });
+  const safeGet = k => { try { return localStorage.getItem(k); } catch { return null; } };
+  const safeSet = (k, v) => { try { localStorage.setItem(k, v); } catch {} };
+  const clamp = n => Math.max(0, Math.min(MAX, Math.trunc(Number(n) || 0)));
+  let raw = safeGet(KEY);
+  const load = () => {
+    try {
+      const s = JSON.parse(raw || 'null');
+      if (!s || !Array.isArray(s.scores)) return fresh();
+      const f = fresh();
+      // saved data may come from an older version or be hand-edited: keep only well-formed fields
+      const num = (v, d) => Number.isFinite(v) && v >= 0 ? v : d;
+      const scores = f.scores.map((_, i) => clamp(s.scores[i]));
+      const last = f.last.map((_, i) => {
+        const n = Array.isArray(s.last) ? s.last[i] : null;
+        return n && typeof n.label === 'string' && Number.isFinite(n.at) ? n : null;
+      });
+      const st = s.timer && typeof s.timer === 'object' ? s.timer : {};
+      const duration = Math.min(num(st.duration, f.timer.duration), 5999000);
+      const timer = {
+        duration,
+        remaining: Math.min(num(st.remaining, duration), duration),
+        running: st.running === true && Number.isFinite(st.endsAt),
+        endsAt: num(st.endsAt, 0),
+      };
+      const view = s.view === 'timer' ? 'timer' : 'scores';
+      return { scores, last, timer, view };
+    } catch { return fresh(); }
+  };
+  let state = load();
+  const save = () => { raw = JSON.stringify(state); safeSet(KEY, raw); };
+  const remaining = t => t.running ? Math.max(0, t.endsAt - Date.now()) : t.remaining;
+  const fmt = ms => { const s = Math.ceil(ms / 1000); return `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`; };
+
+  if (mode === 'control') initControl(); else initDisplay();
+
+  /* =================== PROJECTOR =================== */
+  function initDisplay() {
+    const root = document.getElementById('display');
+    root.hidden = false;
+    root.classList.add('boot');
+    document.title = 'Friendship Island Scoreboard (projector)';
+    const stage = document.getElementById('stage');
+    const sign = document.getElementById('sign');
+    const hint = document.getElementById('hint');
+
+    const fit = () => {
+      const k = Math.min(innerWidth / 1920, innerHeight / 1080);
+      stage.style.transform = `scale(${k}) translate(-50%,-50%)`;
+    };
+    addEventListener('resize', fit); fit();
+
+    const makeSlot = () => {
+      const s = document.createElement('div');
+      s.className = 'slot';
+      s.innerHTML = '<span class="hook l"></span><span class="hook r"></span>';
+      return s;
+    };
+    const makeCard = v => { const c = document.createElement('div'); c.className = 'card'; c.innerHTML = `<b>${v}</b>`; return c; };
+    const setSlot = (slot, v, heavy) => {
+      if (slot.dataset.v === v) return;
+      const first = slot.dataset.v === undefined;
+      slot.dataset.v = v;
+      const old = slot.querySelector('.card:not(.out)');
+      const nc = makeCard(v);
+      if (first || reduced || !old) { if (old) old.remove(); slot.append(nc); return; }
+      old.classList.add('out', heavy ? 'fall' : 'flick');
+      setTimeout(() => old.remove(), 700);
+      nc.classList.add(heavy ? 'land' : 'drop');
+      if (heavy) nc.classList.add('chalk');
+      slot.append(nc);
+    };
+
+    // clock: mm:ss as four hanging cards around two nails
+    const clock = document.getElementById('clock');
+    const clockSlots = [makeSlot(), makeSlot(), makeSlot(), makeSlot()];
+    const nails = document.createElement('div'); nails.className = 'nails'; nails.innerHTML = '<i></i><i></i>';
+    clock.append(clockSlots[0], clockSlots[1], nails, clockSlots[2], clockSlots[3]);
+
+    // team cards
+    const teamsEl = document.getElementById('teams');
+    const planks = TEAMS.map(t => {
+      const p = document.createElement('article');
+      p.className = 'tcard wood';
+      p.innerHTML = `
+        <span class="bolt tl"></span><span class="bolt tr"></span><span class="bolt bl"></span><span class="bolt br"></span>
+        <div class="badge" style="--tl:${t.light};--tc:${t.color}">
+          <img class="animal" src="${t.img}" alt="">
+          <div class="flagpost"><span class="holder"></span><span class="flag"><i></i></span></div>
+          <h2 class="plate"><span>${t.adj} ${t.name}</span></h2>
+        </div>
+        <div class="panel wood"><span class="bolt a"></span><span class="bolt b"></span></div>
+        <div class="slate" aria-hidden="true"></div>`;
+      const panel = p.querySelector('.panel');
+      const slots = [makeSlot(), makeSlot()];
+      panel.append(...slots);
+      teamsEl.append(p);
+      return { el: p, slots, slate: p.querySelector('.slate'), noteAt: 0 };
+    });
+
+    // one-line team name, shrunk only if it would overflow its plate
+    const fitNames = () => planks.forEach(pk => {
+      const n = pk.el.querySelector('.plate'); let fs = 48;
+      n.style.fontSize = fs + 'px';
+      const avail = n.clientWidth - 32;
+      while (n.firstElementChild.scrollWidth > avail && fs > 28) { fs -= 2; n.style.fontSize = fs + 'px'; }
+    });
+    document.fonts.ready.then(fitNames); fitNames();
+    let wasUp = null;
+    const render = () => {
+      // scores
+      const max = Math.max(...state.scores);
+      state.scores.forEach((s, i) => {
+        const pk = planks[i];
+        setSlot(pk.slots[0], s >= 10 ? String(Math.floor(s / 10)) : '', true);
+        setSlot(pk.slots[1], String(s % 10), true);
+        pk.el.classList.toggle('lead', max > 0 && s === max);
+        pk.el.setAttribute('aria-label', `${TEAMS[i].adj} ${TEAMS[i].name}: ${s}`);
+        const n = state.last[i];
+        const live = n && Date.now() - n.at < NOTE_MS;
+        if (live && pk.noteAt !== n.at) {
+          pk.noteAt = n.at;
+          pk.slate.textContent = n.label;
+          pk.slate.classList.remove('on'); void pk.slate.offsetWidth; pk.slate.classList.add('on');
+        } else if (!live) pk.slate.classList.remove('on');
+      });
+      // timer
+      const ms = remaining(state.timer);
+      const txt = fmt(ms).replace(':', '');
+      [...txt].forEach((d, i) => setSlot(clockSlots[i], d, false));
+      const timerView = state.view === 'timer';
+      root.classList.toggle('timer-view', timerView);
+      // TIME! only lands on the timer view; the scores view never surprises the room
+      const up = timerView && ms === 0 && state.timer.duration > 0;
+      root.classList.toggle('timesup', up);
+      if (up && wasUp === false && !reduced) {
+        stage.classList.remove('shudder'); void stage.offsetWidth; stage.classList.add('shudder');
+        sign.classList.remove('flash'); void sign.offsetWidth; sign.classList.add('flash');
+      }
+      wasUp = up;
+    };
+    render();
+    // a timer, not rAF: rAF never fires in a hidden or throttled page, which would leave motion off
+    getComputedStyle(root).opacity; setTimeout(() => root.classList.remove('boot'), 120);
+
+    const pull = () => { const r = safeGet(KEY); if (r !== raw) { raw = r; state = load(); } };
+    addEventListener('storage', e => { if (e.key === KEY) pull(); });
+    setInterval(() => { pull(); render(); }, 150);
+
+    if (mode === 'preview') { hint.remove(); return; }
+
+    // projector window and pop-out: heartbeat for the control view's status dot
+    const ping = () => safeSet(PING, String(Date.now()));
+    ping(); setInterval(ping, 1500);
+    addEventListener('beforeunload', () => safeSet(PING, '0'));
+    let idle;
+    addEventListener('mousemove', () => {
+      root.classList.remove('idle'); clearTimeout(idle);
+      idle = setTimeout(() => root.classList.add('idle'), 2000);
+    });
+
+    // fullscreen is not allowed inside a picture-in-picture window
+    if (mode === 'pip') { hint.remove(); return; }
+    setTimeout(() => hint.classList.add('gone'), 6000);
+    const toggleFs = () => {
+      if (document.fullscreenElement) document.exitFullscreen?.();
+      else document.documentElement.requestFullscreen?.().catch(() => {});
+    };
+    addEventListener('keydown', e => {
+      // plain F only: Ctrl/Cmd+F is the browser's find
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+      if (e.key === 'f' || e.key === 'F') toggleFs();
+    });
+    root.addEventListener('dblclick', toggleFs);
+  }
+
+  /* =================== CONTROL =================== */
+  function initControl() {
+    document.getElementById('control').hidden = false;
+    document.title = 'Friendship Island Scoreboard (control)';
+    const base = location.href.split('#')[0];
+    document.getElementById('preview').src = base + '#preview';
+
+    // projector window
+    let projector = null;
+    document.getElementById('openProjector').addEventListener('click', () => {
+      projector = window.open(base + '#display', 'friendship-island-projector', 'popup=yes,width=1280,height=720');
+      projector?.focus();
+    });
+    const status = document.getElementById('status');
+    const checkStatus = () => {
+      const on = Date.now() - Number(safeGet(PING) || 0) < 4000;
+      status.classList.toggle('on', on);
+      status.lastElementChild.textContent = on ? 'Scoreboard window open' : 'Scoreboard window not open';
+    };
+
+    // always-on-top pop-out (Document Picture-in-Picture) that floats over a fullscreen Canva deck
+    const popBtn = document.getElementById('popOut');
+    let pip = null;
+    // the pop-out closes with this tab, so ask before a reload while it is open
+    const guard = e => { e.preventDefault(); e.returnValue = ''; };
+    if (!('documentPictureInPicture' in window)) {
+      popBtn.hidden = true;
+      document.getElementById('popNote').hidden = false;
+    }
+    popBtn.addEventListener('click', async () => {
+      if (pip) { pip.close(); return; }
+      try {
+        pip = await documentPictureInPicture.requestWindow({ width: 960, height: 540 });
+      } catch { pip = null; return; }
+      const d = pip.document;
+      d.title = 'Friendship Island Scoreboard (pop-out)';
+      const css = d.createElement('style');
+      css.textContent = 'html,body{margin:0;height:100%;background:#17a3b5}iframe{display:block;width:100%;height:100%;border:0}';
+      d.head.append(css);
+      const frame = d.createElement('iframe');
+      frame.title = 'Friendship Island scoreboard';
+      frame.src = base + '#pip';
+      d.body.append(frame);
+      popBtn.textContent = 'Close pop-out';
+      addEventListener('beforeunload', guard);
+      pip.addEventListener('pagehide', () => {
+        pip = null;
+        popBtn.textContent = 'Pop out over slides';
+        removeEventListener('beforeunload', guard);
+        safeSet(PING, '0'); checkStatus();
+      });
+    });
+
+    // team rows
+    const PRESETS = [
+      { d: -1, label: '−1' }, { d: 1, label: '+1' }, { d: 3, label: '+3' },
+    ];
+    const wrap = document.getElementById('teamControls');
+    TEAMS.forEach((t, i) => {
+      const row = document.createElement('div');
+      row.className = 'team';
+      row.innerHTML = `
+        <img src="${t.img}" alt="">
+        <div class="who"><strong><span style="color:${t.color}">${t.adj}</span> ${t.name}</strong></div>
+        <div class="row">${PRESETS.map(p => `<button type="button" data-d="${p.d}" aria-label="${p.label} point for ${t.name}">${p.label}</button>`).join('')}</div>`;
+      row.querySelectorAll('button[data-d]').forEach(b => b.addEventListener('click', () => change(i, Number(b.dataset.d))));
+      wrap.append(row);
+    });
+
+    function change(i, d) {
+      const from = state.scores[i], to = clamp(from + d);
+      if (to === from) return;
+      state.scores[i] = to;
+      state.last[i] = { label: `${to > from ? '+' : '−'}${Math.abs(to - from)}`, at: Date.now() };
+      commit();
+    }
+
+    const resetScores = document.getElementById('resetScores');
+    let armed = null;
+    resetScores.addEventListener('click', () => {
+      if (!armed) {
+        resetScores.classList.add('armed'); resetScores.textContent = 'Click again to reset';
+        armed = setTimeout(disarm, 3500); return;
+      }
+      disarm();
+      state.scores = [0, 0, 0, 0]; state.last = [null, null, null, null];
+      commit();
+    });
+    function disarm() { clearTimeout(armed); armed = null; resetScores.classList.remove('armed'); resetScores.textContent = 'Reset all scores'; }
+
+    // timer
+    const t = () => state.timer;
+    const startPause = document.getElementById('startPause');
+    startPause.addEventListener('click', () => {
+      const tm = t();
+      if (tm.running) { tm.remaining = remaining(tm); tm.running = false; }
+      else {
+        if (tm.remaining <= 0) tm.remaining = tm.duration;
+        tm.endsAt = Date.now() + tm.remaining; tm.running = true;
+      }
+      commit();
+    });
+    const setLength = ms => { state.timer = { duration: ms, remaining: ms, running: false, endsAt: 0 }; commit(); };
+    document.getElementById('resetTimer').addEventListener('click', () => setLength(t().duration));
+    document.querySelectorAll('[data-preset]').forEach(b => b.addEventListener('click', () => setLength(Number(b.dataset.preset) * 1000)));
+    document.getElementById('custom').addEventListener('submit', e => {
+      e.preventDefault();
+      const m = Math.max(0, Math.min(99, Math.trunc(Number(cMin.value) || 0)));
+      const s = Math.max(0, Math.min(59, Math.trunc(Number(cSec.value) || 0)));
+      if (m * 60 + s > 0) setLength((m * 60 + s) * 1000);
+    });
+    const viewBtns = document.querySelectorAll('[data-view]');
+    viewBtns.forEach(b => b.addEventListener('click', () => {
+      if (state.view === b.dataset.view) return;
+      // switching views always leaves the timer stopped at its full length
+      state.view = b.dataset.view;
+      setLength(t().duration);
+    }));
+
+    // render
+    const readout = document.getElementById('readout');
+    function renderControl() {
+      viewBtns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.view === state.view)));
+      // the timer only runs while the board shows it
+      startPause.disabled = state.view !== 'timer';
+      tickControl();
+    }
+    function tickControl() {
+      const tm = t();
+      if (tm.running && Date.now() >= tm.endsAt) { tm.running = false; tm.remaining = 0; save(); }
+      const ms = remaining(tm);
+      readout.textContent = fmt(ms);
+      readout.classList.toggle('up', ms === 0);
+      startPause.textContent = tm.running ? 'Pause' : ms === 0 ? 'Restart' : ms === tm.duration ? 'Start' : 'Resume';
+    }
+    function commit() { save(); renderControl(); }
+
+    addEventListener('storage', e => { if (e.key === KEY && e.newValue !== raw) { raw = e.newValue; state = load(); renderControl(); } });
+    setInterval(() => { tickControl(); checkStatus(); }, 200);
+    renderControl(); checkStatus();
+  }
+})();
+</script>
+</body>
+</html>

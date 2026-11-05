@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Lifeguard Tower Board</title>
+<style>
+:root{--sand:#f2dfb4;--plank:#f7f1e3;--red:#d8262c;--yellow:#f7c21b;--sea:#1aa7b8;--ink:#2a1f1a;--rope:#c69a5b}
+*{box-sizing:border-box;margin:0}
+body{width:1440px;height:900px;overflow:hidden;background:linear-gradient(#7fd6e0 0 34%,#3fb5c4 34% 46%,var(--sand) 46%);font-family:'Arial Black',Impact,sans-serif;color:var(--ink);position:relative}
+.post{position:absolute;top:60px;width:34px;height:840px;background:#e8dcc0;border:4px solid var(--ink)}
+.post.l{left:110px}.post.r{right:110px}
+.header{position:absolute;left:90px;right:90px;top:46px;height:150px;background:var(--red);border:6px solid var(--ink);display:flex;align-items:center;justify-content:space-between;padding:0 50px;color:#fff}
+.header h1{font-size:64px;letter-spacing:.02em;text-transform:uppercase}
+.clock{display:flex;gap:10px;align-items:center}
+.card{width:92px;height:120px;background:var(--plank);color:var(--ink);border:5px solid var(--ink);font-size:96px;display:grid;place-items:center;line-height:1;box-shadow:0 6px 0 rgba(0,0,0,.25)}
+.colon{font-size:80px;color:var(--yellow)}
+.teams{position:absolute;left:90px;right:90px;top:232px;display:grid;grid-template-columns:repeat(4,1fr);gap:26px}
+.team{position:relative;background:var(--plank);border:6px solid var(--ink);height:560px;display:flex;flex-direction:column;align-items:center;padding-top:30px}
+.team:nth-child(odd){background:#fff7e6}
+.hook{position:absolute;top:-40px;width:6px;height:40px;background:var(--rope)}
+.hook.a{left:60px}.hook.b{right:60px}
+.animal{width:150px;height:150px;border-radius:50%;border:6px solid var(--ink);display:grid;place-items:center;font-size:84px}
+.name{margin-top:20px;font-size:34px;text-transform:uppercase;text-align:center;line-height:1}
+.digits{margin-top:auto;margin-bottom:40px;display:flex;gap:12px}
+.digits .card{width:120px;height:170px;font-size:150px}
+.lead{background:var(--yellow)!important}
+.flag{position:absolute;top:-96px;right:24px;width:70px;height:46px;background:linear-gradient(135deg,var(--red) 50%,var(--yellow) 50%);border:4px solid var(--ink)}
+.flag:after{content:'';position:absolute;left:-10px;top:-4px;width:6px;height:110px;background:var(--ink)}
+.tag{position:absolute;bottom:14px;font:700 24px 'Courier New',monospace;color:var(--red)}
+.qr{position:absolute;right:28px;bottom:24px;width:110px;height:110px;background:#fff;border:5px solid var(--ink)}
+.logo{position:absolute;left:28px;bottom:24px;width:96px;height:96px;border-radius:50%;background:var(--yellow);border:5px solid var(--ink)}
+</style></head><body>
+<div class="post l"></div><div class="post r"></div>
+<div class="header"><h1>Friendship Island</h1><div class="clock"><div class="card">0</div><div class="card">3</div><span class="colon">:</span><div class="card">0</div><div class="card">0</div></div></div>
+<div class="teams">
+ <div class="team" style="--c:#ef5aa0"><span class="hook a"></span><span class="hook b"></span><div class="animal" style="background:#f9a8cf">🦩</div><div class="name">Fierce<br>Flamingos</div><div class="digits"><div class="card">1</div><div class="card">4</div></div><div class="tag">+3 LEGO</div></div>
+ <div class="team lead"><span class="flag"></span><span class="hook a"></span><span class="hook b"></span><div class="animal" style="background:#ff8a6b">🦞</div><div class="name">Lucky<br>Lobsters</div><div class="digits"><div class="card">2</div><div class="card">1</div></div><div class="tag">+10 BONUS</div></div>
+ <div class="team"><span class="hook a"></span><span class="hook b"></span><div class="animal" style="background:#7fd6e0">🐬</div><div class="name">Daring<br>Dolphins</div><div class="digits"><div class="card">1</div><div class="card">7</div></div><div class="tag">+1 LEGO</div></div>
+ <div class="team"><span class="hook a"></span><span class="hook b"></span><div class="animal" style="background:#cfd8e3">🦭</div><div class="name">Snazzy<br>Seals</div><div class="digits"><div class="card">0</div><div class="card">9</div></div><div class="tag">+2 BONUS</div></div>
+</div>
+<div class="logo"></div><div class="qr"></div>
+</body></html>

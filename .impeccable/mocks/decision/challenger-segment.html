@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Boardwalk LED Board</title>
+<style>
+*{box-sizing:border-box;margin:0}
+body{width:1440px;height:900px;overflow:hidden;background:#1d1438;font-family:'Courier New',monospace;color:#ffb347;position:relative}
+.top{position:absolute;left:60px;right:60px;top:40px;height:220px;border:6px solid #3a2a63;display:flex;align-items:center;justify-content:center;gap:40px}
+.seg{font:700 190px/1 'Courier New',monospace;color:#ff4fa3;text-shadow:0 0 18px #ff4fa3;letter-spacing:.05em}
+.seg .ghost{color:#3a2a63;text-shadow:none}
+.grid{position:absolute;left:60px;right:60px;top:300px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.cell{border:6px solid #3a2a63;height:520px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:30px 0}
+.cell .n{font-size:40px;color:#ffe39a;letter-spacing:.15em}
+.cell .s{font:700 230px/1 'Courier New',monospace;color:#ffb347;text-shadow:0 0 22px #ffb347}
+.cell.lead{border-color:#ff4fa3}.cell.lead .s{color:#ff4fa3;text-shadow:0 0 26px #ff4fa3}
+.cell .a{font-size:80px}
+</style></head><body>
+<div class="top"><div class="seg">0<span>3</span>:00</div></div>
+<div class="grid">
+<div class="cell"><div class="a">🦩</div><div class="s">14</div><div class="n">FLAMINGOS</div></div>
+<div class="cell lead"><div class="a">🦞</div><div class="s">21</div><div class="n">LOBSTERS</div></div>
+<div class="cell"><div class="a">🐬</div><div class="s">17</div><div class="n">DOLPHINS</div></div>
+<div class="cell"><div class="a">🦭</div><div class="s">09</div><div class="n">SEALS</div></div>
+</div>
+</body></html>
