@@ -7,7 +7,7 @@ related_targets: []
 
 # Scoreboard surface brief
 
-Mode: Experience (projector view), Operate (control view). Single offline file `scoreboard.html`; `#display` hash = projector window (fallback), `#pip` = always-on-top pop-out over the Canva deck, default = control window. Build path: code-led (no image generation).
+Mode: Experience (projector view), Operate (control view). Single offline file `scoreboard.html`; `#pip` = always-on-top pop-out over the Canva deck, `#preview` = control thumbnail, default = control window. (2026-11-05: timer and `#display` projector window removed; board is a 1600x400 red strip of four yellow tiles, each animal + two score cards + donation total.) Build path: code-led (no image generation).
 
 Audience/job: ballroom audience reads countdown, four scores (0–99) and the leader from the back row; one operator on the same laptop drives everything from a presenter-style control window.
 
